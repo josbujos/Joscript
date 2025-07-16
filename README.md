@@ -2,9 +2,10 @@
 
 🤖 **JosScript** ist ein fortschrittlicher lokaler AI-Code-Editor, der StarCoder2 mit TensorRT-Optimierung und Blockchain-Integration verwendet.
 
-> **Hinweis:**
+> **⚠️ WICHTIG:**
 > - Das große StarCoder2 Modell (`starcoder2-15b-Q5_K_S.gguf`) **ist nicht im Repository enthalten** und muss separat heruntergeladen werden (siehe unten).
 > - Auch der gesamte `llama-cpp-python/` Ordner (enthält die Backend-Bibliothek für lokale Inferenz) **ist nicht im Repository** und muss separat gebaut oder bezogen werden.
+> - **Die .bat Dateien funktionieren NICHT ohne diese Dependencies!**
 
 ## ✨ Features
 
@@ -25,37 +26,66 @@
 - 16GB+ RAM
 - 20GB+ freier Speicherplatz
 
-### Schnellstart
+### Vollständige Installation (Schritt-für-Schritt)
+
+#### 1. Repository klonen
 ```bash
-# 1. Repository klonen
-git clone https://github.com/yourusername/josscript.git
-cd josscript
-
-# 2. Installation starten
-install_josscript.bat
-
-# 3. JosScript starten
-start_josscript.bat
+git clone https://github.com/josbujos/Joscript.git
+cd Joscript
 ```
 
-### Manuelle Installation
+#### 2. Python Environment erstellen
 ```bash
 # Virtual Environment erstellen
 python -m venv josscript_env
 josscript_env\Scripts\activate
 
-# Dependencies installieren
+# Pip upgraden
+python -m pip install --upgrade pip
+```
+
+#### 3. Dependencies installieren
+```bash
+# PyTorch mit CUDA 12.9 Support
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu129
+
+# llama-cpp-python mit CUDA Support (WICHTIG!)
+pip install llama-cpp-python --force-reinstall --index-url https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/cu129
+
+# Alle anderen Dependencies
 pip install -r requirements.txt
+```
 
-# StarCoder2 Modell herunterladen (separat)
-# Download: starcoder2-15b-Q5_K_S.gguf (10GB)
+#### 4. StarCoder2 Modell herunterladen (10GB)
+```bash
+# Download von Hugging Face
 # Link: https://huggingface.co/TheBloke/starcoder2-15B-GGUF
+# Datei: starcoder2-15b-Q5_K_S.gguf
 
-# llama-cpp-python Backend (separat)
-# Entweder selbst bauen (https://github.com/abetlen/llama-cpp-python) oder passende Windows-Binaries verwenden
+# Oder mit wget (falls installiert):
+# wget https://huggingface.co/TheBloke/starcoder2-15B-GGUF/resolve/main/starcoder2-15b-Q5_K_S.gguf
+```
+
+#### 5. TensorRT installieren (optional, für RTX 50xx)
+```bash
+# Download von NVIDIA Developer
+# https://developer.nvidia.com/tensorrt
+# Version: TensorRT 10.12.0.36 für Windows 10 CUDA 12.9
+```
+
+#### 6. JosScript starten
+```bash
+# Environment aktivieren
+josscript_env\Scripts\activate
 
 # JosScript starten
 python agent_simple.py
+```
+
+### Schnellstart (nur wenn alle Dependencies vorhanden)
+```bash
+# Nur wenn StarCoder2 Modell und Dependencies bereits installiert sind:
+start_josscript.bat
 ```
 
 ## 📁 Projektstruktur
@@ -64,8 +94,8 @@ python agent_simple.py
 josscript/
 ├── agent_simple.py          # Hauptanwendung
 ├── requirements.txt         # Python Dependencies
-├── install_josscript.bat    # Windows Installer
-├── start_josscript.bat      # Windows Starter
+├── install_josscript.bat    # Windows Installer (nur für Dependencies)
+├── start_josscript.bat      # Windows Starter (nur wenn alles da ist)
 ├── README.md               # Diese Datei
 ├── LICENSE                 # MIT Lizenz
 ├── .gitignore             # Git Ignore Regeln
@@ -182,9 +212,9 @@ Dieses Projekt steht unter der MIT Lizenz - siehe [LICENSE](LICENSE) Datei für 
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/josscript/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/josscript/discussions)
-- **Wiki**: [GitHub Wiki](https://github.com/yourusername/josscript/wiki)
+- **Issues**: [GitHub Issues](https://github.com/josbujos/Joscript/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/josbujos/Joscript/discussions)
+- **Wiki**: [GitHub Wiki](https://github.com/josbujos/Joscript/wiki)
 
 ---
 
