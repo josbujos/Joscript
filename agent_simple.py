@@ -275,7 +275,7 @@ def init_llm():
         model = Llama(
             model_path=MODELLPFAD,
             n_ctx=8192,  # Erhöhte Kontext-Länge
-            n_gpu_layers=40,  # Mehr GPU-Layer für RTX 5070 Ti
+            n_gpu_layers=-1,  # ALLE Layer auf GPU (-1 = alle)
             n_threads=12,  # Mehr CPU Threads
             verbose=False,
             use_mmap=True,  # Memory Mapping für bessere Performance
@@ -283,8 +283,8 @@ def init_llm():
             seed=42,  # Reproduzierbare Ergebnisse
             n_batch=512,  # Batch-Größe für GPU
             rope_scaling_type=0,  # Keine RoPE Scaling
-            rope_freq_base=10000.0,  # Standard RoPE Frequenz
-            rope_freq_scale=1.0,  # Standard RoPE Scale
+            rope_freq_base=1000,  # Standard RoPE Frequenz
+            rope_freq_scale=10,  # Standard RoPE Scale
         )
 
         # Wrapper für einfache Nutzung
@@ -1120,24 +1120,26 @@ def lade_josscript():
 
 def verbessere_josscript():
     """Verbessert JosScript automatisch mit Blockchain-Integration"""
-    if not current_file_path.get() or "agent_simple" not in current_file_path.get():
-        messagebox.showwarning("Hinweis", "Bitte lade zuerst JosScript selbst.")
+    if not current_file_path.get():
+        messagebox.showwarning("Hinweis", "Bitte lade zuerst eine Datei.")
         return
 
     try:
-        with open(current_file_path.get(), "r", encoding="utf-8") as f:
-            code = f.read()
+        # Verwende den Code aus dem Editor statt aus der Datei
+        code = editor.get("1.0", tk.END).strip()
+
+        if not code:
+            messagebox.showwarning("Hinweis", "Kein Code im Editor vorhanden.")
+            return
 
         anweisung = (
             f"Verbessere diesen Code. Mache ihn robuster, effizienter und benutzerfreundlicher. "
-            f"Füge Blockchain-Integration hinzu, wo sinnvoll:\n\n"
-            f"{code[:1000]}..."
+            f"Füge Fehlerbehandlung, Kommentare und Best Practices hinzu:\n\n"
+            f"{code}"
         )
         antwort = frage_modell(anweisung)
 
-        ausgabe.insert(
-            tk.END, f"\n🔧 VERBESSERUNGSVORSCHLÄGE (Blockchain):\n{antwort}\n"
-        )
+        ausgabe.insert(tk.END, f"\n🔧 VERBESSERUNGSVORSCHLÄGE:\n{antwort}\n")
         ausgabe.see(tk.END)
 
     except Exception as e:
@@ -1146,24 +1148,26 @@ def verbessere_josscript():
 
 def erweitere_josscript():
     """Erweitert JosScript mit neuen Features und Blockchain"""
-    if not current_file_path.get() or "agent_simple" not in current_file_path.get():
-        messagebox.showwarning("Hinweis", "Bitte lade zuerst JosScript selbst.")
+    if not current_file_path.get():
+        messagebox.showwarning("Hinweis", "Bitte lade zuerst eine Datei.")
         return
 
     try:
-        with open(current_file_path.get(), "r", encoding="utf-8") as f:
-            code = f.read()
+        # Verwende den Code aus dem Editor statt aus der Datei
+        code = editor.get("1.0", tk.END).strip()
+
+        if not code:
+            messagebox.showwarning("Hinweis", "Kein Code im Editor vorhanden.")
+            return
 
         anweisung = (
-            f"Erweitere diesen Code um neue Features. Füge mindestens 3 neue Funktionen hinzu, "
-            f"darunter Blockchain-Integration, Code-Analyse-Tools und automatische Verarbeitung:\n\n"
-            f"{code[:1000]}..."
+            f"Erweitere diesen Code um neue Features. Füge mindestens2-3eue Funktionen hinzu, "
+            f"die den Code nützlicher machen. Zeige den erweiterten Code in ```python Blöcken:\n\n"
+            f"{code}"
         )
         antwort = frage_modell(anweisung)
 
-        ausgabe.insert(
-            tk.END, f"\n🚀 ERWEITERUNGSVORSCHLÄGE (Blockchain):\n{antwort}\n"
-        )
+        ausgabe.insert(tk.END, f"\n🚀 ERWEITERUNGSVORSCHLÄGE:\n{antwort}\n")
         ausgabe.see(tk.END)
 
     except Exception as e:
@@ -1820,4 +1824,3 @@ def init_app():
 
 if __name__ == "__main__":
     init_app()
-

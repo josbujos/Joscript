@@ -82,10 +82,21 @@ josscript_env\Scripts\activate
 python agent_simple.py
 ```
 
-### Schnellstart (nur wenn alle Dependencies vorhanden)
+### Schnellstart
 ```bash
-# Nur wenn StarCoder2 Modell und Dependencies bereits installiert sind:
-start_josscript.bat
+# 1. Repository klonen
+git clone https://github.com/josbujos/Joscript.git
+cd Joscript
+
+# 2. Installation starten (Windows)
+install.bat
+
+#3 StarCoder2dell herunterladen (10
+# https://huggingface.co/TheBloke/starcoder2-15B-GGUF
+# Datei: starcoder2-15b-Q5_K_S.gguf
+
+# 4 JosScript starten
+start.bat
 ```
 
 ## 📁 Projektstruktur
@@ -94,12 +105,12 @@ start_josscript.bat
 josscript/
 ├── agent_simple.py          # Hauptanwendung
 ├── requirements.txt         # Python Dependencies
-├── install_josscript.bat    # Windows Installer (nur für Dependencies)
-├── start_josscript.bat      # Windows Starter (nur wenn alles da ist)
+├── install.bat             # Windows Installer (erstellt venv + start.bat)
+├── start.bat               # Windows Starter (wird von install.bat erstellt)
 ├── README.md               # Diese Datei
 ├── LICENSE                 # MIT Lizenz
 ├── .gitignore             # Git Ignore Regeln
-├── starcoder2-15b-Q5_K_S.gguf  # AI Modell (10GB, separat, nicht im Repo)
+├── starcoder215-Q5_K_S.gguf  # AI Modell (10GB, separat, nicht im Repo)
 ├── llama-cpp-python/           # Backend-Bibliothek (separat, nicht im Repo)
 └── code_blockchain.json    # Blockchain Daten (wird erstellt)
 ```
