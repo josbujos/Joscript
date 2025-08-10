@@ -1,13 +1,13 @@
+import hashlib
+import json
 import os
+import subprocess
+import sys
+import threading
+import time
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from tkinter.scrolledtext import ScrolledText
-import threading
-import json
-import hashlib
-import time
-import subprocess
-import sys
 
 # === Konfiguration ===
 MODELLPFAD = "starcoder2-15b-Q5_K_S.gguf"
